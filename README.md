@@ -92,6 +92,11 @@ sahel-font/
 │   ├── Sahel-VF.ttf          # Variable font
 │   ├── Sahel-VF.woff2        # Variable font (compressed)
 │   └── font-face.css         # CSS declarations
+├── .github/         # GitHub Actions workflows
+│   └── workflows/
+│       ├── build.yml         # CI/CD build workflow
+│       └── release.yml       # Release workflow
+├── validate_fonts.py # Font quality validation script
 └── build.conf       # Build configuration
 ```
 
@@ -99,9 +104,26 @@ sahel-font/
 
 After building, you can test the fonts by:
 
-1. Installing them on your system
-2. Opening them in FontForge to inspect
-3. Using the web font-face declarations in a test HTML page
+1. **Using the validation script**:
+   ```bash
+   python3 validate_fonts.py
+   ```
+   This will check all TTF files in the `dist/` directory for:
+   - File format validity
+   - Required tables presence
+   - Metadata completeness
+   - Reasonable file sizes
+
+2. **Manual testing**:
+   - Install them on your system
+   - Open them in FontForge to inspect
+   - Use the web font-face declarations in a test HTML page
+
+3. **Using fonttools**:
+   ```bash
+   ttx -l dist/Sahel-VF.ttf  # List tables
+   ttx -t name dist/Sahel.ttf  # Extract name table
+   ```
 
 ## 🤝 Contributing
 

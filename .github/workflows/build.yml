@@ -99,22 +99,11 @@ jobs:
         
     - name: 🧪 Validate font files with fonttools
       run: |
-        echo "🔍 Validating font files..."
-        
-        # Validate variable font
-        echo "Testing Sahel-VF.ttf..."
-        ttx -l dist/Sahel-VF.ttf > /tmp/vf-tables.txt
-        echo "✓ Variable TTF has $(wc -l < /tmp/vf-tables.txt) tables"
-        
-        # Validate a few static fonts
-        for font in dist/Sahel.ttf dist/Sahel-Bold.ttf; do
-          echo "Testing $(basename $font)..."
-          ttx -l "$font" > /tmp/test.txt
-          echo "✓ $(basename $font) has $(wc -l < /tmp/test.txt) tables"
-        done
-        
+        echo "🔍 Running comprehensive font validation..."
+        chmod +x validate_fonts.py
+        python3 validate_fonts.py
         echo ""
-        echo "✓ All font files are valid!"
+        echo "✓ Comprehensive validation completed!"
         
     - name: 📦 Upload variable font artifacts
       uses: actions/upload-artifact@v4
