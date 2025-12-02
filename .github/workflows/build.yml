@@ -53,7 +53,13 @@ jobs:
       run: |
         cd variable
         chmod +x makevariable.sh
-        ./makevariable.sh /tmp/build-test || echo "Build encountered known issues with source compatibility"
+        if ./makevariable.sh /tmp/build-test; then
+          echo "build_success=true" >> $GITHUB_OUTPUT
+          echo "✓ Variable font build succeeded"
+        else
+          echo "build_success=false" >> $GITHUB_OUTPUT
+          echo "⚠ Build encountered known issues with source compatibility"
+        fi
         
     - name: 🔍 Verify pre-built fonts exist
       run: |

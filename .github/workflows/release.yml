@@ -61,12 +61,21 @@ jobs:
         mkdir -p "${PACKAGE_DIR}"
         
         # Copy font files
-        cp -r dist/* "${PACKAGE_DIR}/"
+        if [ -d "dist" ]; then
+          cp -r dist/* "${PACKAGE_DIR}/"
+        else
+          echo "✗ dist directory not found!"
+          exit 1
+        fi
         
         # Copy documentation
-        cp LICENSE "${PACKAGE_DIR}/"
-        cp CHANGELOG.md "${PACKAGE_DIR}/"
-        cp README.md "${PACKAGE_DIR}/"
+        for file in LICENSE CHANGELOG.md README.md; do
+          if [ -f "$file" ]; then
+            cp "$file" "${PACKAGE_DIR}/"
+          else
+            echo "⚠ Warning: $file not found, skipping"
+          fi
+        done
         
         # Create zip file
         ZIP_FILE="sahel-font-${VERSION}.zip"

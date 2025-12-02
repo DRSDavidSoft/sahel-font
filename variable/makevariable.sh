@@ -38,7 +38,7 @@ print_info() {
 # Check if output directory is specified
 if [ -z "$1" ]; then
     print_error "Output directory not specified!"
-    echo "Usage: $0 <output-directory>"
+    print_info "Usage: $0 <output-directory>"
     exit 1
 fi
 
@@ -86,8 +86,10 @@ echo ""
 
 # Build variable font
 print_step "🏗️  Building variable font..."
-if fontmake -o variable -m Sahel.designspace --output-path="$OUTPUT_DIR/Sahel-VF.ttf" 2>&1; then
+BUILD_OUTPUT=$(mktemp)
+if fontmake -o variable -m Sahel.designspace --output-path="$OUTPUT_DIR/Sahel-VF.ttf" 2>&1 | tee "$BUILD_OUTPUT"; then
     print_success "Variable font built: $OUTPUT_DIR/Sahel-VF.ttf"
+    rm -f "$BUILD_OUTPUT"
     echo ""
     
     # Compress to WOFF2
@@ -113,6 +115,7 @@ if fontmake -o variable -m Sahel.designspace --output-path="$OUTPUT_DIR/Sahel-VF
 else
     print_warning "Variable font build encountered compatibility issues"
     print_info "This is a known issue with the source files"
+    print_info "Build log saved to: $BUILD_OUTPUT"
     echo ""
     
     # Clean up temporary files

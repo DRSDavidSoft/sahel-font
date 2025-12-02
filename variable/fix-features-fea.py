@@ -39,6 +39,12 @@ def fix_line(line):
     """
     Fix a single line of feature code.
     
+    The function processes positioning rules in the format:
+    pos \uniXXXX <val1 val2 val3 val4> \uniYYYY <val5 val6 val7 val8> < val9 val10 val11 val12 >;
+    
+    We extract: [pos, \uniXXXX, \uniYYYY] + [<, val9, val10, val11, val12, >;]
+    Which simplifies to: pos \uniXXXX \uniYYYY < val9 val10 val11 val12 >;
+    
     Args:
         line: A line from the feature file
         
@@ -55,11 +61,14 @@ def fix_line(line):
     if trimmed_line.endswith("< 0 0 0 0 >;"):
         return ""
 
-    # Simplify positioning rules
+    # Simplify positioning rules by extracting key components
+    # Expected format has 11 parts after splitting
     parts = list(filter(lambda x: x != "", trimmed_line.split(" ")))
     if len(parts) != 11:
         return line
 
+    # Extract: command (parts[0]), glyph1 (parts[1]), glyph2 (parts[6]), 
+    # and final positioning values (parts[-4:])
     return " ".join([parts[0], parts[1], parts[6]] + parts[-4:]) + "\n"
 
 

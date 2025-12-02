@@ -74,7 +74,8 @@ def validate_ttf_structure(font_path):
             ['ttx', '-l', font_path],
             capture_output=True,
             text=True,
-            check=True
+            check=True,
+            timeout=30  # 30 second timeout
         )
         
         # Count tables
@@ -82,6 +83,8 @@ def validate_ttf_structure(font_path):
                   if line.strip() and not line.startswith('Listing') and not line.startswith('tag')]
         
         return True, len(tables), tables
+    except subprocess.TimeoutExpired:
+        return False, 0, []
     except subprocess.CalledProcessError as e:
         return False, 0, []
 
