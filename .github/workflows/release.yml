@@ -1,0 +1,158 @@
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v3.4.0)'
+        required: true
+        type: string
+
+jobs:
+  build-and-release:
+    name: 🏗️ Build and Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: 📦 Install dependencies
+      run: |
+        echo "::group::📦 Installing system dependencies"
+        sudo apt-get update
+        sudo apt-get install -y fontforge woff2 zip
+        echo "::endgroup::"
+        
+        echo "::group::🐍 Installing Python dependencies"
+        pip install --upgrade pip
+        pip install fontmake fonttools brotli zopfli
+        echo "::endgroup::"
+        
+    - name: 🏗️ Build variable font
+      run: |
+        cd variable
+        chmod +x makevariable.sh
+        ./makevariable.sh ../dist
+        
+    - name: 📦 Create release package
+      run: |
+        echo "📦 Creating release package..."
+        
+        # Determine version
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          VERSION="${{ github.event.inputs.version }}"
+        else
+          VERSION="${GITHUB_REF#refs/tags/}"
+        fi
+        
+        # Create package directory
+        PACKAGE_DIR="sahel-font-${VERSION}"
+        mkdir -p "${PACKAGE_DIR}"
+        
+        # Copy font files
+        cp -r dist/* "${PACKAGE_DIR}/"
+        
+        # Copy documentation
+        cp LICENSE "${PACKAGE_DIR}/"
+        cp CHANGELOG.md "${PACKAGE_DIR}/"
+        cp README.md "${PACKAGE_DIR}/"
+        
+        # Create zip file
+        ZIP_FILE="sahel-font-${VERSION}.zip"
+        zip -r "${ZIP_FILE}" "${PACKAGE_DIR}"
+        
+        echo "✓ Created ${ZIP_FILE}"
+        ls -lh "${ZIP_FILE}"
+        
+        # Save for next steps
+        echo "PACKAGE_FILE=${ZIP_FILE}" >> $GITHUB_ENV
+        echo "VERSION=${VERSION}" >> $GITHUB_ENV
+        
+    - name: 🔍 List package contents
+      run: |
+        echo "📋 Package contents:"
+        unzip -l "${{ env.PACKAGE_FILE }}"
+        
+    - name: 🚀 Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ env.VERSION }}
+        name: Sahel Font ${{ env.VERSION }}
+        body: |
+          # 🔤 Sahel Font ${{ env.VERSION }}
+          
+          Persian (Farsi) font with variable version support.
+          
+          ## 📦 What's Included
+          
+          ### Variable Font
+          - `Sahel-VF.ttf` - Variable font (TTF format)
+          - `Sahel-VF.woff2` - Variable font (WOFF2 format, web optimized)
+          
+          ### Static Fonts
+          - `Sahel-Light.*` - Light weight (300)
+          - `Sahel.*` - Regular weight (400)
+          - `Sahel-SemiBold.*` - Semi-bold weight (600)
+          - `Sahel-Bold.*` - Bold weight (700)
+          - `Sahel-Black.*` - Black weight (900)
+          
+          ### Formats Available
+          - TTF (TrueType Font)
+          - WOFF (Web Open Font Format)
+          - WOFF2 (Web Open Font Format 2)
+          - EOT (Embedded OpenType)
+          
+          ### Additional Files
+          - `font-face.css` - Ready-to-use CSS font declarations
+          - Alternative versions in `Farsi-Digits/` and `Without-Latin/` directories
+          
+          ## 📥 Installation
+          
+          1. Download `${{ env.PACKAGE_FILE }}`
+          2. Extract the archive
+          3. Install the font files on your system or use in your web project
+          
+          ## 🌐 Web Usage
+          
+          ```css
+          @font-face {
+            font-family: 'Sahel VF';
+            src: url('Sahel-VF.woff2') format('woff2');
+          }
+          
+          .text {
+            font-family: 'Sahel VF', sans-serif;
+            font-variation-settings: "wght" 600;
+          }
+          ```
+          
+          See [README.md](README.md) for more details.
+          
+          ---
+          
+          Built with ❤️ using GitHub Actions
+        files: |
+          ${{ env.PACKAGE_FILE }}
+          dist/Sahel-VF.ttf
+          dist/Sahel-VF.woff2
+        draft: false
+        prerelease: false
+        fail_on_unmatched_files: true
+        
+    - name: ✅ Release complete
+      run: |
+        echo "✨ Release ${{ env.VERSION }} created successfully!"
+        echo ""
+        echo "📦 Package: ${{ env.PACKAGE_FILE }}"
+        echo "🔗 Release URL: https://github.com/${{ github.repository }}/releases/tag/${{ env.VERSION }}"

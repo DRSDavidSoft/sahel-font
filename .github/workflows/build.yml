@@ -1,0 +1,146 @@
+name: 🔤 Build Sahel Font
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 🏗️ Build Variable Font
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: 📦 Install dependencies
+      run: |
+        echo "::group::📦 Installing system dependencies"
+        sudo apt-get update
+        sudo apt-get install -y fontforge woff2
+        echo "::endgroup::"
+        
+        echo "::group::🐍 Installing Python dependencies"
+        pip install --upgrade pip
+        pip install fontmake fonttools brotli zopfli
+        echo "::endgroup::"
+        
+    - name: 🔍 Verify tools installation
+      run: |
+        echo "✓ FontForge version:"
+        fontforge --version 2>&1 | head -n 1 || echo "FontForge installed"
+        echo ""
+        echo "✓ Python version:"
+        python3 --version
+        echo ""
+        echo "✓ fontmake version:"
+        fontmake --version
+        echo ""
+        echo "✓ woff2_compress available:"
+        which woff2_compress
+        
+    - name: 🏗️ Build variable font
+      run: |
+        cd variable
+        chmod +x makevariable.sh
+        ./makevariable.sh ../dist
+        
+    - name: 🔍 Verify build outputs
+      run: |
+        echo "📋 Checking for built font files..."
+        if [ -f "dist/Sahel-VF.ttf" ]; then
+          echo "✓ Variable TTF found"
+          ls -lh dist/Sahel-VF.ttf
+        else
+          echo "✗ Variable TTF not found!"
+          exit 1
+        fi
+        
+        if [ -f "dist/Sahel-VF.woff2" ]; then
+          echo "✓ Variable WOFF2 found"
+          ls -lh dist/Sahel-VF.woff2
+        else
+          echo "✗ Variable WOFF2 not found!"
+          exit 1
+        fi
+        
+        echo ""
+        echo "📊 Build statistics:"
+        echo "  TTF size:   $(du -h dist/Sahel-VF.ttf | cut -f1)"
+        echo "  WOFF2 size: $(du -h dist/Sahel-VF.woff2 | cut -f1)"
+        
+    - name: 📦 Upload variable font artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: sahel-variable-fonts
+        path: |
+          dist/Sahel-VF.ttf
+          dist/Sahel-VF.woff2
+        if-no-files-found: error
+        retention-days: 90
+        
+    - name: 📦 Upload all font artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: sahel-all-fonts
+        path: |
+          dist/**/*.ttf
+          dist/**/*.woff
+          dist/**/*.woff2
+          dist/**/*.eot
+          dist/**/font-face.css
+        if-no-files-found: error
+        retention-days: 90
+        
+  test:
+    name: 🧪 Test Font Files
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: 📦 Install fonttools
+      run: |
+        pip install fonttools
+        
+    - name: 📥 Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: sahel-variable-fonts
+        path: dist/
+        
+    - name: 🧪 Validate TTF font
+      run: |
+        echo "🔍 Validating Sahel-VF.ttf..."
+        ttx -l dist/Sahel-VF.ttf
+        echo "✓ TTF validation passed"
+        
+    - name: 🧪 Check font metadata
+      run: |
+        echo "📋 Font metadata:"
+        ttx -t name -o - dist/Sahel-VF.ttf | grep -A 2 "namerecord" | head -n 20
+        echo "✓ Metadata check passed"
+        
+    - name: ✅ Test summary
+      run: |
+        echo "✓ All font validation tests passed!"
+        echo ""
+        echo "📊 Summary:"
+        echo "  - TTF file structure: Valid"
+        echo "  - WOFF2 file: Present"
+        echo "  - Metadata: Readable"
