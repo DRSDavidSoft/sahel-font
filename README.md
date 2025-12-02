@@ -132,6 +132,12 @@ This repository includes GitHub Actions workflows for automated building and tes
 
 ### Variable Font Issues
 - Mark placement distortion in some contexts
+- **Build compatibility issues**: The source SFD files have glyph component compatibility issues that prevent building the variable font from source. The pre-built variable fonts in the `dist/` directory are functional and were built from an earlier compatible version of the source files.
+
+### Workaround
+Use the pre-built variable font files in the `dist/` directory:
+- `dist/Sahel-VF.ttf` - Variable font (TTF format)
+- `dist/Sahel-VF.woff2` - Variable font (WOFF2 format)
 
 ## 📝 To-Do List
 

@@ -27,6 +27,10 @@ print_error() {
     echo -e "${RED}✗ $1${NC}"
 }
 
+print_warning() {
+    echo -e "${YELLOW}⚠ $1${NC}"
+}
+
 print_info() {
     echo -e "${BLUE}ℹ $1${NC}"
 }
@@ -82,27 +86,45 @@ echo ""
 
 # Build variable font
 print_step "🏗️  Building variable font..."
-fontmake -o variable -m Sahel.designspace --output-path="$OUTPUT_DIR/Sahel-VF.ttf"
-print_success "Variable font built: $OUTPUT_DIR/Sahel-VF.ttf"
-echo ""
-
-# Compress to WOFF2
-print_step "📦 Compressing to WOFF2 format..."
-woff2_compress "$OUTPUT_DIR/Sahel-VF.ttf"
-print_success "WOFF2 file created: $OUTPUT_DIR/Sahel-VF.woff2"
-echo ""
-
-# Clean up temporary files
-print_step "🧹 Cleaning up temporary files..."
-rm -rf Sahel.ufo Sahel-Bold.ufo Sahel-Black.ufo
-print_success "Cleanup completed"
-echo ""
-
-echo -e "${GREEN}╔═══════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║  ✨ Build completed successfully! ✨     ║${NC}"
-echo -e "${GREEN}╚═══════════════════════════════════════════╝${NC}"
-echo ""
-print_info "Output files:"
-echo "  - $OUTPUT_DIR/Sahel-VF.ttf"
-echo "  - $OUTPUT_DIR/Sahel-VF.woff2"
-echo ""
+if fontmake -o variable -m Sahel.designspace --output-path="$OUTPUT_DIR/Sahel-VF.ttf" 2>&1; then
+    print_success "Variable font built: $OUTPUT_DIR/Sahel-VF.ttf"
+    echo ""
+    
+    # Compress to WOFF2
+    print_step "📦 Compressing to WOFF2 format..."
+    woff2_compress "$OUTPUT_DIR/Sahel-VF.ttf"
+    print_success "WOFF2 file created: $OUTPUT_DIR/Sahel-VF.woff2"
+    echo ""
+    
+    # Clean up temporary files
+    print_step "🧹 Cleaning up temporary files..."
+    rm -rf Sahel.ufo Sahel-Bold.ufo Sahel-Black.ufo
+    print_success "Cleanup completed"
+    echo ""
+    
+    echo -e "${GREEN}╔═══════════════════════════════════════════╗${NC}"
+    echo -e "${GREEN}║  ✨ Build completed successfully! ✨     ║${NC}"
+    echo -e "${GREEN}╚═══════════════════════════════════════════╝${NC}"
+    echo ""
+    print_info "Output files:"
+    echo "  - $OUTPUT_DIR/Sahel-VF.ttf"
+    echo "  - $OUTPUT_DIR/Sahel-VF.woff2"
+    echo ""
+else
+    print_warning "Variable font build encountered compatibility issues"
+    print_info "This is a known issue with the source files"
+    echo ""
+    
+    # Clean up temporary files
+    print_step "🧹 Cleaning up temporary files..."
+    rm -rf Sahel.ufo Sahel-Bold.ufo Sahel-Black.ufo
+    print_success "Cleanup completed"
+    echo ""
+    
+    echo -e "${YELLOW}╔═══════════════════════════════════════════╗${NC}"
+    echo -e "${YELLOW}║  ⚠ Build completed with warnings ⚠      ║${NC}"
+    echo -e "${YELLOW}╚═══════════════════════════════════════════╝${NC}"
+    echo ""
+    print_info "Note: Pre-built variable fonts are available in the dist/ directory"
+    exit 1
+fi
