@@ -11,6 +11,9 @@ jobs:
   build:
     name: 🏗️ Build and Validate Fonts
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
     
     steps:
     - name: 📥 Checkout repository
@@ -160,6 +163,9 @@ jobs:
     name: 🧪 Test Font Files
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
     
     steps:
     - name: 📥 Checkout repository
