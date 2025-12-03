@@ -1,6 +1,6 @@
 # Glyph Set Parity Audit: Sahel-VF vs Static Variants
 
-**Date:** December 3, 2025  
+**Date:** 2025-12-03  
 **Purpose:** Assess if the Sahel variable font (Sahel-VF) can serve as a complete replacement for all static font variants.
 
 ## Executive Summary

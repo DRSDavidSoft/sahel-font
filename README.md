@@ -279,12 +279,12 @@ This repository includes GitHub Actions workflows for automated building and tes
 
 ## 🐛 Known Issues
 
-### Resolved Issues ✅
+### Resolved Issues (DONE)
 
-- ✅ **Latin character support**: Now included in variable font
-- ✅ **Western digit support**: Now included with OpenType switching
-- ✅ **Multiple font files needed**: Replaced by single variable font with features
-- ✅ **Farsi digits**: Switchable via CSS `font-feature-settings: "ss01" 1`
+- ✓ **Latin character support**: Now included in variable font
+- ✓ **Western digit support**: Now included with OpenType switching
+- ✓ **Multiple font files needed**: Replaced by single variable font with features
+- ✓ **Farsi digits**: Switchable via CSS `font-feature-settings: "ss01" 1`
 
 ### Current Limitations
 

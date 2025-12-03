@@ -131,7 +131,9 @@ feature ss01 {
     return output_path
 
 def main():
-    base_dir = Path("/home/runner/work/sahel-font/sahel-font")
+    # Use script location to determine project root
+    script_dir = Path(__file__).parent
+    base_dir = script_dir.parent
     dist_dir = base_dir / "dist"
     
     # Input files
