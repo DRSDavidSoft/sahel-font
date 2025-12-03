@@ -173,9 +173,16 @@ def main():
     print("=" * 70)
     print(f"\nNew enhanced variable font: {vf_final}")
     print("\nNext steps:")
-    print("1. Test the new font file")
-    print("2. Generate WOFF2 version")
-    print("3. Update documentation")
+    print("1. Verify the enhanced font:")
+    print(f"   python3 -c \"from fontTools.ttLib import TTFont; f=TTFont('{vf_final}'); print(f'Glyphs: {{len(f.getGlyphOrder())}}')\"")
+    print("\n2. Generate WOFF2 version:")
+    print(f"   python3 -c \"from fontTools.ttLib import TTFont; f=TTFont('{vf_final}'); f.flavor='woff2'; f.save('{dist_dir}/Sahel-VF-New.woff2')\"")
+    print("\n3. Replace old files (after testing):")
+    print(f"   mv {dist_dir}/Sahel-VF.ttf {dist_dir}/Sahel-VF-old.ttf")
+    print(f"   mv {vf_final} {dist_dir}/Sahel-VF.ttf")
+    print(f"   mv {dist_dir}/Sahel-VF-New.woff2 {dist_dir}/Sahel-VF.woff2")
+    print("\n4. Test in browser using dist/test-sahel-vf.html")
+    print("\nNote: Files are named '-New' to avoid overwriting the original until verified.")
     
     return 0
 
