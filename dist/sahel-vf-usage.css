@@ -1,0 +1,272 @@
+/*
+ * Sahel Variable Font - CSS Usage Examples
+ * 
+ * The enhanced Sahel-VF font includes all glyphs (Latin, Western digits, Farsi digits)
+ * and supports OpenType features for flexible usage.
+ */
+
+/* ==================================================================
+   1. BASIC VARIABLE FONT USAGE
+   ================================================================== */
+
+/* Load the variable font */
+@font-face {
+  font-family: 'Sahel VF';
+  src: url('Sahel-VF.woff2') format('woff2-variations'),
+       url('Sahel-VF.ttf') format('truetype-variations');
+  font-weight: 400 900;  /* Supports weights from 400 (Regular) to 900 (Black) */
+  font-display: swap;
+}
+
+/* Basic usage with default settings */
+body {
+  font-family: 'Sahel VF', sans-serif;
+  font-weight: 400;  /* Regular weight */
+}
+
+/* Use different weights */
+h1 {
+  font-weight: 900;  /* Black */
+}
+
+h2 {
+  font-weight: 700;  /* Bold */
+}
+
+h3 {
+  font-weight: 600;  /* SemiBold */
+}
+
+.light-text {
+  font-weight: 300;  /* Light */
+}
+
+/* ==================================================================
+   2. FARSI DIGITS FEATURE (ss01)
+   ================================================================== */
+
+/*
+ * By default, Western digits (0-9) display as Western numerals.
+ * Use the ss01 feature to display them as Farsi numerals (۰-۹).
+ */
+
+/* Enable Farsi digits globally */
+.farsi-digits {
+  font-feature-settings: "ss01" 1;
+}
+
+/* Practical examples */
+.price-farsi {
+  font-family: 'Sahel VF', sans-serif;
+  font-feature-settings: "ss01" 1;  /* 1234 displays as ۱۲۳۴ */
+}
+
+.price-western {
+  font-family: 'Sahel VF', sans-serif;
+  font-feature-settings: "ss01" 0;  /* 1234 displays as 1234 (default) */
+}
+
+/* Mixed content example */
+.article-date {
+  font-family: 'Sahel VF', sans-serif;
+  font-feature-settings: "ss01" 1;  /* Use Farsi digits for dates */
+}
+
+/* ==================================================================
+   3. MIGRATION FROM SEPARATE FONT FILES
+   ================================================================== */
+
+/*
+ * OLD WAY: Using separate font files for different variants
+ */
+
+/* Old Farsi-Digits font */
+@font-face {
+  font-family: 'SahelF';
+  src: url('Farsi-Digits/Sahel-FD.ttf');
+  /* Required separate files for each weight */
+}
+
+/* OLD CSS */
+.old-farsi-style {
+  font-family: 'SahelF', sans-serif;  /* Required different font family */
+}
+
+/*
+ * NEW WAY: Single variable font with feature toggle
+ */
+
+/* NEW CSS - Much simpler! */
+.new-farsi-style {
+  font-family: 'Sahel VF', sans-serif;
+  font-feature-settings: "ss01" 1;
+  font-weight: 400;  /* Can use any weight from 400-900 */
+}
+
+/* ==================================================================
+   4. PRACTICAL USAGE EXAMPLES
+   ================================================================== */
+
+/* Persian blog with Farsi digits */
+.persian-blog {
+  font-family: 'Sahel VF', sans-serif;
+  font-weight: 400;
+  font-feature-settings: "ss01" 1;  /* Use Farsi digits */
+}
+
+/* Mixed Persian-English content with Western digits */
+.mixed-content {
+  font-family: 'Sahel VF', sans-serif;
+  font-weight: 400;
+  /* ss01 disabled by default, Western digits used */
+}
+
+/* Date/time display with Farsi numerals */
+.datetime-farsi {
+  font-family: 'Sahel VF', sans-serif;
+  font-weight: 600;  /* SemiBold */
+  font-feature-settings: "ss01" 1;
+}
+
+/* Price display with Western numerals */
+.price-display {
+  font-family: 'Sahel VF', sans-serif;
+  font-weight: 700;  /* Bold */
+  font-feature-settings: "ss01" 0;  /* Explicitly disable */
+}
+
+/* ==================================================================
+   5. COMBINING WITH OTHER OPENTYPE FEATURES
+   ================================================================== */
+
+/*
+ * The variable font preserves all original OpenType features.
+ * You can combine ss01 with other features as needed.
+ */
+
+/* Enable multiple features */
+.advanced-typography {
+  font-family: 'Sahel VF', sans-serif;
+  font-feature-settings: 
+    "ss01" 1,   /* Farsi digits */
+    "liga" 1,   /* Ligatures */
+    "calt" 1;   /* Contextual alternates */
+}
+
+/* ==================================================================
+   6. RESPONSIVE WEIGHT ADJUSTMENT
+   ================================================================== */
+
+/* Responsive font weights using variable font */
+@media (min-width: 320px) {
+  body {
+    font-family: 'Sahel VF', sans-serif;
+    font-weight: 400;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    font-weight: 450;  /* Slightly bolder for better readability on tablets */
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    font-weight: 400;  /* Back to normal on desktop */
+  }
+}
+
+/* ==================================================================
+   7. ANIMATION EXAMPLES
+   ================================================================== */
+
+/* Smooth weight transition animation */
+@keyframes weight-pulse {
+  0%, 100% {
+    font-weight: 400;
+  }
+  50% {
+    font-weight: 700;
+  }
+}
+
+.animated-heading {
+  font-family: 'Sahel VF', sans-serif;
+  animation: weight-pulse 2s ease-in-out infinite;
+}
+
+/* ==================================================================
+   8. BROWSER SUPPORT & FALLBACKS
+   ================================================================== */
+
+/* Modern browsers with variable font support */
+@supports (font-variation-settings: normal) {
+  .modern-browser {
+    font-family: 'Sahel VF', sans-serif;
+    font-weight: 400;
+  }
+}
+
+/* Fallback for older browsers (use static fonts) */
+@supports not (font-variation-settings: normal) {
+  @font-face {
+    font-family: 'Sahel Fallback';
+    src: url('Sahel.ttf');
+    font-weight: 400;
+  }
+  
+  .modern-browser {
+    font-family: 'Sahel Fallback', sans-serif;
+  }
+}
+
+/* ==================================================================
+   9. PERFORMANCE OPTIMIZATION
+   ================================================================== */
+
+/*
+ * Preload the variable font for better performance
+ * Add to <head> section of HTML:
+ * 
+ * <link rel="preload" href="Sahel-VF.woff2" as="font" type="font/woff2" crossorigin>
+ */
+
+/* Use font-display for better loading experience */
+@font-face {
+  font-family: 'Sahel VF';
+  src: url('Sahel-VF.woff2') format('woff2-variations');
+  font-weight: 400 900;
+  font-display: swap;  /* Show fallback font while loading */
+}
+
+/* ==================================================================
+   10. COMPLETE EXAMPLE
+   ================================================================== */
+
+/* Complete setup for a Persian website */
+:root {
+  --font-family-primary: 'Sahel VF', sans-serif;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-regular);
+  direction: rtl;  /* Right-to-left for Persian */
+  text-align: right;
+}
+
+/* Use Farsi digits for all numeric content */
+article, .content {
+  font-feature-settings: "ss01" 1;
+}
+
+/* Use Western digits for specific elements */
+.code, .api-response, .data-table {
+  font-feature-settings: "ss01" 0;
+}

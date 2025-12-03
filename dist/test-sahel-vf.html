@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahel Variable Font - Test & Demo</title>
+    <style>
+        @font-face {
+            font-family: 'Sahel VF';
+            src: url('Sahel-VF.woff2') format('woff2-variations'),
+                 url('Sahel-VF.ttf') format('truetype-variations');
+            font-weight: 400 900;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sahel VF', sans-serif;
+            font-weight: 400;
+            line-height: 1.8;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-weight: 900;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        h2 {
+            font-weight: 700;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-weight: 600;
+            font-size: 1.3em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #2980b9;
+        }
+
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+
+        .example {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-right: 4px solid #3498db;
+        }
+
+        .weight-demo {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+        }
+
+        .farsi-digits {
+            font-feature-settings: "ss01" 1;
+        }
+
+        .western-digits {
+            font-feature-settings: "ss01" 0;
+        }
+
+        .label {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+            font-weight: 700;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-box {
+            padding: 20px;
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+        }
+
+        .comparison-box h4 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔤 قلم متغیر ساحل - نسخه پیشرفته</h1>
+        <p>این صفحه نمایشی از قابلیت‌های جدید قلم متغیر ساحل است که شامل همه حروف لاتین، اعداد غربی، و ویژگی OpenType برای تغییر اعداد می‌باشد.</p>
+
+        <h2>۱. آزمایش ضخامت‌های مختلف (Weight Variations)</h2>
+        <div class="demo-section">
+            <div class="weight-demo" style="font-weight: 400;">
+                <span class="label">400</span>
+                سبک - این متن با وزن ۴۰۰ نمایش داده می‌شود (Regular - Minimum)
+            </div>
+            <div class="weight-demo" style="font-weight: 400;">
+                <span class="label">400</span>
+                معمولی - این متن با وزن ۴۰۰ نمایش داده می‌شود (Regular)
+            </div>
+            <div class="weight-demo" style="font-weight: 500;">
+                <span class="label">500</span>
+                متوسط - این متن با وزن ۵۰۰ نمایش داده می‌شود (Medium)
+            </div>
+            <div class="weight-demo" style="font-weight: 600;">
+                <span class="label">600</span>
+                نیمه‌بولد - این متن با وزن ۶۰۰ نمایش داده می‌شود (SemiBold)
+            </div>
+            <div class="weight-demo" style="font-weight: 700;">
+                <span class="label">700</span>
+                بولد - این متن با وزن ۷۰۰ نمایش داده می‌شود (Bold)
+            </div>
+            <div class="weight-demo" style="font-weight: 800;">
+                <span class="label">800</span>
+                خیلی بولد - این متن با وزن ۸۰۰ نمایش داده می‌شود (ExtraBold)
+            </div>
+            <div class="weight-demo" style="font-weight: 900;">
+                <span class="label">900</span>
+                سیاه - این متن با وزن ۹۰۰ نمایش داده می‌شود (Black)
+            </div>
+        </div>
+
+        <h2>۲. مقایسه اعداد فارسی و غربی</h2>
+        <div class="comparison">
+            <div class="comparison-box">
+                <h4>اعداد غربی (پیش‌فرض)</h4>
+                <p class="western-digits" style="font-size: 1.5em;">
+                    0 1 2 3 4 5 6 7 8 9
+                </p>
+                <p class="western-digits">
+                    قیمت: 123,456 تومان<br>
+                    تاریخ: 1403/09/12<br>
+                    شماره تماس: 09123456789
+                </p>
+                <code>font-feature-settings: "ss01" 0;</code>
+            </div>
+            <div class="comparison-box">
+                <h4>اعداد فارسی (با فعال‌سازی ss01)</h4>
+                <p class="farsi-digits" style="font-size: 1.5em;">
+                    0 1 2 3 4 5 6 7 8 9
+                </p>
+                <p class="farsi-digits">
+                    قیمت: 123,456 تومان<br>
+                    تاریخ: 1403/09/12<br>
+                    شماره تماس: 09123456789
+                </p>
+                <code>font-feature-settings: "ss01" 1;</code>
+            </div>
+        </div>
+
+        <h2>۳. جدول اطلاعات</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ردیف</th>
+                    <th>نام</th>
+                    <th class="farsi-digits">سن (فارسی)</th>
+                    <th class="western-digits">سن (غربی)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="farsi-digits">1</td>
+                    <td>علی رضایی</td>
+                    <td class="farsi-digits">25</td>
+                    <td class="western-digits">25</td>
+                </tr>
+                <tr>
+                    <td class="farsi-digits">2</td>
+                    <td>سارا احمدی</td>
+                    <td class="farsi-digits">30</td>
+                    <td class="western-digits">30</td>
+                </tr>
+                <tr>
+                    <td class="farsi-digits">3</td>
+                    <td>محمد کریمی</td>
+                    <td class="farsi-digits">42</td>
+                    <td class="western-digits">42</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>۴. پشتیبانی از حروف لاتین</h2>
+        <div class="example">
+            <h3>Latin Alphabet Support</h3>
+            <p style="font-size: 1.2em;">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                abcdefghijklmnopqrstuvwxyz<br>
+                0123456789
+            </p>
+            <p>
+                The Sahel Variable Font now includes full Latin alphabet support,
+                making it perfect for bilingual Persian-English content. نوشتن همزمان
+                Persian and English text is now seamless!
+            </p>
+        </div>
+
+        <h2>۵. مزایای قلم متغیر جدید</h2>
+        <div class="demo-section">
+            <h3>✓ یک فایل به جای 42+ فایل</h3>
+            <p>دیگر نیازی به دانلود چندین فایل مختلف برای وزن‌ها و حالت‌های مختلف نیست.</p>
+
+            <h3>✓ تغییر آسان بین اعداد فارسی و غربی</h3>
+            <p>با استفاده از <code>font-feature-settings</code> به راحتی بین اعداد تغییر دهید.</p>
+
+            <h3>✓ حجم کمتر</h3>
+            <p>فایل WOFF2 فقط 52KB است - کوچکتر از دانلود چند فایل جداگانه!</p>
+
+            <h3>✓ انعطاف‌پذیری بیشتر</h3>
+            <p>می‌توانید از هر وزنی بین 400 تا 900 استفاده کنید، نه فقط 5 وزن ثابت.</p>
+
+            <h3>✓ پشتیبانی کامل از لاتین</h3>
+            <p>حالا می‌توانید محتوای دوزبانه فارسی-انگلیسی بنویسید.</p>
+        </div>
+
+        <h2>۶. نمونه کد CSS</h2>
+        <div class="example">
+            <pre style="background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>/* بارگذاری قلم متغیر */
+@font-face {
+  font-family: 'Sahel VF';
+  src: url('Sahel-VF.woff2') format('woff2-variations');
+  font-weight: 400 900;
+}
+
+/* استفاده پایه */
+body {
+  font-family: 'Sahel VF', sans-serif;
+  font-weight: 400;
+}
+
+/* فعال‌سازی اعداد فارسی */
+.farsi-digits {
+  font-feature-settings: "ss01" 1;
+}
+
+/* استفاده از وزن‌های مختلف */
+h1 { font-weight: 900; }  /* Black */
+h2 { font-weight: 700; }  /* Bold */
+h3 { font-weight: 600; }  /* SemiBold */</code></pre>
+        </div>
+
+        <h2>۷. اطلاعات فنی</h2>
+        <div class="demo-section">
+            <table>
+                <tr>
+                    <th>ویژگی</th>
+                    <th>مقدار</th>
+                </tr>
+                <tr>
+                    <td>تعداد گلیف‌ها</td>
+                    <td class="farsi-digits">552</td>
+                </tr>
+                <tr>
+                    <td>محدوده وزن</td>
+                    <td class="farsi-digits">400-900</td>
+                </tr>
+                <tr>
+                    <td>حجم فایل TTF</td>
+                    <td>103.2 KB</td>
+                </tr>
+                <tr>
+                    <td>حجم فایل WOFF2</td>
+                    <td>51.8 KB</td>
+                </tr>
+                <tr>
+                    <td>ویژگی‌های OpenType</td>
+                    <td>calt, fina, init, kern, liga, mark, medi, mkmk, rlig, ss01</td>
+                </tr>
+            </table>
+        </div>
+
+        <footer style="margin-top: 50px; padding-top: 30px; border-top: 2px solid #ecf0f1; text-align: center; color: #7f8c8d;">
+            <p>قلم ساحل - نسخه متغیر پیشرفته</p>
+            <p style="font-size: 0.9em;">Enhanced Variable Font with Latin & OpenType Features</p>
+        </footer>
+    </div>
+</body>
+</html>
