@@ -1,164 +1,191 @@
-<div dir="rtl">
+# Sahel Font - Development Repository
 
-# فونت ساحل
+A Persian (Farsi) font with variable version support. This repository contains the source files and build tools for developing and building the Sahel font family.
 
-[**English Version**](https://github.com/mskf1383/sahel-font/blob/patch-2/README_EN.md)
+![Sahel Variable Font Demo](./sample-variable.gif)
 
-فونت فارسی همراه با نسخه متغیر
-  
-![Sahel-VF](./sample-variable.gif)
- 
-[نمایش فونت](http://rastikerdar.github.io/sahel-font/)  
-[صفحه دریافت (دانلود) بسته فونت شامل فایل های ttf,woff,eot](https://github.com/rastikerdar/sahel-font/releases)  
-با تشکر از برنامه [FontForge](https://fontforge.github.io)  
-نسخه متغیر فونت با نام `Sahel-VF‍` در بسته فونت موجود می‌باشد.  
-نسخه‌های «بدون حروف لاتین» یا «تمام ارقام فارسی» درون بسته فشرده موجود می‌باشد.  
-فرآیند تولید بسته نهایی شامل انواع نسخه‌ها و فرمت‌ها توسط ابزار [fontbuilder](https://github.com/rastikerdar/fontbuilder) انجام می‌شود.
+## 🚀 Features
 
+- **Multiple weights**: Light (300), Regular (400), SemiBold (600), Bold (700), Black (900)
+- **Variable font**: Single file with adjustable weight axis
+- **Multiple formats**: TTF, WOFF, WOFF2, EOT
+- **Persian/Farsi support**: Optimized for Persian typography
+- **Web-ready**: Includes CSS font-face declarations
 
-## مشکلات شناخته شده در نسخه متغیر
-- mark placement distortion.
+## 📋 Prerequisites
 
+To build the fonts from source, you'll need:
 
-## برای انجام (متغیر)
-- ✔ افزودن همه سه حالت به نسخه متغیر.
--  صفحه تست فونت
--  Latin section is empty. It's better to use an opensource variable font with a wide range.
--  تست فونت در تمام برنامه‌های پشتیبانی شده.
--  Adding other axes.
+- **FontForge**: Font editor and converter
+- **Python 3**: For build scripts
+- **fontmake**: Python tool for building fonts
+- **woff2_compress**: Tool for creating WOFF2 files
 
+### Installing Dependencies
 
-## طریقه استفاده در صفحات وب
+#### Ubuntu/Debian
 
-کد زیر را در قسمت style یا فایل css وارد نمایید:
-</div>
-
-
-```css
-@font-face {
-  font-family: Sahel;
-  src: url('Sahel.eot');
-  src: url('Sahel.eot?#iefix') format('embedded-opentype'),
-       url('Sahel.woff2') format('woff2'),
-       url('Sahel.woff') format('woff'),
-       url('Sahel.ttf') format('truetype');
-  font-weight: normal;
-}
-      
-@font-face {
-  font-family: Sahel;
-  src: url('Sahel-Bold.eot');
-  src: url('Sahel-Bold.eot?#iefix') format('embedded-opentype'),
-       url('Sahel-Bold.woff2') format('woff2'),
-       url('Sahel-Bold.woff') format('woff'),
-       url('Sahel-Bold.ttf') format('truetype');
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: Sahel;
-  src: url('Sahel-Light.eot');
-  src: url('Sahel-Light.eot?#iefix') format('embedded-opentype'),
-       url('Sahel-Light.woff2') format('woff2'),  
-       url('Sahel-Light.woff') format('woff'),
-       url('Sahel-Light.ttf') format('truetype');
-  font-weight: 300;
-}
-      
-@font-face {
-  font-family: Sahel;
-  src: url('Sahel-SemiBold.eot');
-  src: url('Sahel-SemiBold.eot?#iefix') format('embedded-opentype'),
-       url('Sahel-SemiBold.woff2') format('woff2'),  
-       url('Sahel-SemiBold.woff') format('woff'),
-       url('Sahel-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: Sahel;
-  src: url('Sahel-Black.eot');
-  src: url('Sahel-Black.eot?#iefix') format('embedded-opentype'),
-       url('Sahel-Black.woff2') format('woff2'),  
-       url('Sahel-Black.woff') format('woff'),
-       url('Sahel-Black.ttf') format('truetype');
-  font-weight: 900;
-}
+```bash
+sudo apt-get update
+sudo apt-get install -y fontforge python3 python3-pip
+pip3 install fontmake defcon
+sudo apt-get install -y woff2
 ```
 
-<div dir="rtl">
+#### macOS
 
-## طریقه استفاده از نسخه متغیر variable
-</div>
-
-```css
-@font-face {
-  font-family: Sahel VF;
-  src: url('Sahel-VF.woff2') format('woff2');
-}
-
-.foo {
-  font-family: Sahel VF;
-  font-variation-settings: "wght" 600;
-}
-
-.bar {
-  font-family: Sahel VF;
-  font-variation-settings: "wght" 900;
-}
-
+```bash
+brew install fontforge python3
+pip3 install fontmake defcon
+brew install woff2
 ```
 
-<div dir="rtl">
+#### Arch Linux
 
-## نصب
-
-فایل [آخرین نسخه](https://github.com/rastikerdar/sahel-font/releases/latest) را دریافت کنید.
-
-یا از شبکه توزیع محتوا [jsDelivr](https://www.jsdelivr.com) استفاده کنید:
-</div>
-
-```html
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v[X.Y.Z]/dist/font-face.css" rel="stylesheet" type="text/css" />
-```
-<div dir="rtl">
-
-[X.Y.Z] را با آخرین نسخه (مثال: 3.4.0) جایگزین کنید و در CSS خود قرار دهید:
-</div>
-
-```
-font-family: 'Sahel', sans-serif;
+```bash
+sudo pacman -S fontforge python python-pip woff2
+pip install fontmake defcon
 ```
 
-<div dir="rtl">
+## 🔨 Building the Fonts
 
-#### آرچ لینوکس
+### Building Variable Font
 
-کاربران آرچ می‌توانند از بسته [sahel-fonts](https://aur.archlinux.org/packages/sahel-fonts/) از مخزن [AUR](https://aur.archlinux.org/) برای نصب فونت ساحل استفاده کنند. از [AUR helper](https://wiki.archlinux.org/index.php/AUR_helpers) مورد علاقه خود مانند pacaur یا yaourt برای نصب بسته استفاده کنید:
-</div>
+To build the variable font from source files:
 
-```shell
-pacaur -S sahel-fonts
+```bash
+cd variable
+./makevariable.sh ../dist
 ```
 
-<div dir="rtl">
+This will:
+1. Convert SFD source files to UFO format
+2. Fix feature definitions
+3. Fix glyph compatibility issues for variable fonts
+4. Clean up references to missing glyphs
+5. Generate variable TTF font
+6. Compress to WOFF2 format
+7. Clean up temporary files
 
-#### گنو لینوکس
-کاربران گنو لینوکس می‌توانند از ابزار مدیرت فونت [کاتب](https://github.com/kiamazi/kateb) برای نصب فونت ساحل استفاده کنند:
-</div>
+### Building Static Fonts
+
+The static font files (TTF, WOFF, WOFF2, EOT) for each weight are pre-built and available in the `dist/` directory. To rebuild them, you would need the fontbuilder tool (see original repository).
+
+## 📁 Repository Structure
 
 ```
-kateb install sahel
-or
-kateb update sahel
+sahel-font/
+├── source/          # Source SFD (FontForge) files
+│   ├── Sahel.sfd
+│   ├── Sahel-Bold.sfd
+│   ├── Sahel-Black.sfd
+│   ├── Sahel-SemiBold.sfd
+│   └── Sahel-Light.sfd
+├── variable/        # Variable font build scripts
+│   ├── makevariable.sh       # Main build script
+│   ├── fix-features-fea.py   # Feature file fixer
+│   ├── fontforge.pe          # FontForge script
+│   └── Sahel.designspace     # Designspace file
+├── dist/            # Built font files
+│   ├── Sahel*.ttf
+│   ├── Sahel*.woff
+│   ├── Sahel*.woff2
+│   ├── Sahel*.eot
+│   ├── Sahel-VF.ttf          # Variable font
+│   ├── Sahel-VF.woff2        # Variable font (compressed)
+│   └── font-face.css         # CSS declarations
+├── .github/         # GitHub Actions workflows
+│   └── workflows/
+│       ├── build.yml         # CI/CD build workflow
+│       └── release.yml       # Release workflow
+├── validate_fonts.py # Font quality validation script
+└── build.conf       # Build configuration
 ```
 
-<div dir="rtl">
+## 🧪 Testing
 
-## مشارکت کنندگان
+After building, you can test the fonts by:
 
-- امین عابدی [@aminabedi68](https://github.com/aminabedi68)
+1. **Using the validation script**:
+   ```bash
+   python3 validate_fonts.py
+   ```
+   This will check all TTF files in the `dist/` directory for:
+   - File format validity
+   - Required tables presence
+   - Metadata completeness
+   - Reasonable file sizes
 
-## مجوز
-۲۰۱۶ صابر راستی کردار ([@rastikerdar](https://github.com/rastikerdar)). فایل `LICENSE` را مشاهده کنید.
-</div>
+2. **Manual testing**:
+   - Install them on your system
+   - Open them in FontForge to inspect
+   - Use the web font-face declarations in a test HTML page
+
+3. **Using fonttools**:
+   ```bash
+   ttx -l dist/Sahel-VF.ttf  # List tables
+   ttx -t name dist/Sahel.ttf  # Extract name table
+   ```
+
+## 🤝 Contributing
+
+This is a fork of the original [Sahel Font](https://github.com/rastikerdar/sahel-font) repository. 
+
+### Development Workflow
+
+1. Modify source files in `source/` directory using FontForge
+2. Build the variable font using the scripts in `variable/`
+3. Test the built fonts
+4. Commit your changes
+
+### Code Style
+
+- Shell scripts: Use clear variable names, add comments for complex operations
+- Python scripts: Follow PEP 8 guidelines
+- Add helpful console output with colors and emojis
+
+## 📦 Continuous Integration
+
+This repository includes GitHub Actions workflows for automated building and testing:
+
+- **Build**: Automatically builds fonts on push and pull requests
+- **Release**: Creates releases with built font artifacts
+- **Artifact Upload**: Uploads built fonts as GitHub Actions artifacts
+
+## 🐛 Known Issues
+
+### Variable Font Issues
+- Mark placement distortion in some contexts
+- **Build process**: The source SFD files had glyph component compatibility issues that required automatic fixes during the build process. The build scripts now include:
+  - `fix-compatibility.py` - Decomposes problematic composite glyphs to ensure compatibility
+  - `clean-features.py` - Removes references to missing glyphs from feature files
+
+### Build Notes
+The variable font can now be successfully built from source using the enhanced build scripts. The scripts automatically:
+1. Detect and fix component reference mismatches across masters
+2. Decompose incompatible composite glyphs
+3. Clean up feature file references to missing glyphs
+
+## 📝 To-Do List
+
+- [ ] Font testing page
+- [ ] Add Latin characters from an open-source variable font
+- [ ] Test font in all supported applications
+- [ ] Add additional variable font axes (e.g., width, slant)
+
+## 📄 License
+
+This project is licensed under the SIL Open Font License (OFL). See the [LICENSE](LICENSE) file for details.
+
+## 🙏 Credits
+
+- **Original Author**: Saber Rastikerdar ([@rastikerdar](https://github.com/rastikerdar))
+- **Contributors**: Amin Abedi ([@aminabedi68](https://github.com/aminabedi68))
+- **Tools**: Built with [FontForge](https://fontforge.github.io)
+
+## 📚 Resources
+
+- [Original Sahel Font Repository](https://github.com/rastikerdar/sahel-font)
+- [Font Preview](http://rastikerdar.github.io/sahel-font/)
+- [FontForge Documentation](https://fontforge.org/docs/)
+- [Variable Fonts Guide](https://web.dev/variable-fonts/)
