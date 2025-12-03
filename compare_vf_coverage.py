@@ -12,7 +12,6 @@ This script analyzes and compares:
 import sys
 from pathlib import Path
 from fontTools.ttLib import TTFont
-from collections import defaultdict
 
 
 # ANSI color codes
@@ -56,6 +55,23 @@ def print_warning(message):
 def print_info(message):
     """Print info message"""
     print(f"{Colors.BLUE}ℹ {message}{Colors.NC}")
+
+
+def format_unicode_char(codepoint):
+    """Safely format a Unicode codepoint with its character representation"""
+    try:
+        if codepoint < 0x10000:
+            # Try to get printable character
+            char = chr(codepoint)
+            if char.isprintable() and not char.isspace():
+                return f"U+{codepoint:04X} ({char})"
+            else:
+                return f"U+{codepoint:04X}"
+        else:
+            return f"U+{codepoint:05X}"
+    except (ValueError, OverflowError):
+        # Handle invalid codepoints
+        return f"U+{codepoint:04X}" if codepoint < 0x10000 else f"U+{codepoint:05X}"
 
 
 def get_glyph_names(font_path):
@@ -225,7 +241,7 @@ def compare_fonts():
     if vf_only_chars:
         print_warning(f"Characters only in VF: {len(vf_only_chars)}")
         if len(vf_only_chars) <= 20:
-            chars_str = ', '.join([f"U+{c:04X} ({chr(c)})" if c < 0x10000 else f"U+{c:05X}" for c in sorted(vf_only_chars)])
+            chars_str = ', '.join([format_unicode_char(c) for c in sorted(vf_only_chars)])
             print(f"  {chars_str}")
     else:
         print_success("No characters exclusive to VF")
@@ -233,7 +249,7 @@ def compare_fonts():
     if static_only_chars:
         print_warning(f"Characters only in static fonts: {len(static_only_chars)}")
         if len(static_only_chars) <= 20:
-            chars_str = ', '.join([f"U+{c:04X} ({chr(c)})" if c < 0x10000 else f"U+{c:05X}" for c in sorted(static_only_chars)])
+            chars_str = ', '.join([format_unicode_char(c) for c in sorted(static_only_chars)])
             print(f"  {chars_str}")
     else:
         print_success("No characters exclusive to static fonts")
