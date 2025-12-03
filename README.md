@@ -1,25 +1,103 @@
 # Sahel Font - Development Repository
 
-A Persian (Farsi) font with variable version support. This repository contains the source files and build tools for developing and building the Sahel font family.
+A Persian (Farsi) font with **enhanced variable font support**. This repository contains the source files and build tools for developing and building the Sahel font family.
 
 ![Sahel Variable Font Demo](./sample-variable.gif)
 
+## ✨ What's New
+
+**Enhanced Variable Font** - Now with complete Latin support and OpenType features!
+
+- ✅ **Single file replaces 42+ static variants**
+- ✅ **Complete character set**: Latin alphabet + Western & Farsi digits
+- ✅ **OpenType feature `ss01`**: Switch between Western (0-9) and Farsi (۰-۹) digits via CSS
+- ✅ **Smaller downloads**: 51.8 KB WOFF2 replaces multiple files
+- ✅ **Flexible weights**: Any weight from 400-900, not just 5 fixed values
+- ✅ **Backward compatible**: Static fonts still available for legacy support
+
 ## 🚀 Features
 
-- **Multiple weights**: Light (300), Regular (400), SemiBold (600), Bold (700), Black (900)
-- **Variable font**: Single file with adjustable weight axis
-- **Multiple formats**: TTF, WOFF, WOFF2, EOT
-- **Persian/Farsi support**: Optimized for Persian typography
-- **Web-ready**: Includes CSS font-face declarations
+- **Variable font (Recommended)**: Single file with adjustable weight axis (400-900)
+- **Complete character support**: Persian/Farsi, Arabic, Latin alphabet, and digits
+- **OpenType features**: Contextual alternates, ligatures, and Farsi digit switching
+- **Multiple formats**: TTF, WOFF2 (variable), plus legacy static files
+- **Web-ready**: Modern CSS with font-feature-settings examples
+- **Optimized**: Small file size with excellent compression
+
+## 🎯 Quick Start - Using the Variable Font
+
+### For Web Projects (Recommended)
+
+```html
+<!-- Add to your HTML <head> -->
+<link rel="preload" href="Sahel-VF.woff2" as="font" type="font/woff2" crossorigin>
+```
+
+```css
+/* Load the variable font */
+@font-face {
+  font-family: 'Sahel VF';
+  src: url('Sahel-VF.woff2') format('woff2-variations'),
+       url('Sahel-VF.ttf') format('truetype-variations');
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+/* Basic usage */
+body {
+  font-family: 'Sahel VF', sans-serif;
+  font-weight: 400;  /* Any value from 400 to 900 */
+}
+
+/* Use Farsi digits (۰-۹) instead of Western digits (0-9) */
+.farsi-digits {
+  font-feature-settings: "ss01" 1;
+}
+```
+
+**See also:**
+- 📄 [Complete CSS Examples](dist/sahel-vf-usage.css) - Comprehensive usage guide
+- 🧪 [Interactive Test Page](dist/test-sahel-vf.html) - See it in action
+- 📊 [Glyph Analysis Report](docs/missing-glyphs.md) - Technical details
+
+### Migration from Old Fonts
+
+**Before:** Using separate font files
+```css
+@font-face {
+  font-family: 'SahelF';  /* Separate family for Farsi digits */
+  src: url('Farsi-Digits/Sahel-FD.ttf');
+}
+```
+
+**After:** Single variable font with feature toggle
+```css
+@font-face {
+  font-family: 'Sahel VF';
+  src: url('Sahel-VF.woff2') format('woff2-variations');
+  font-weight: 400 900;
+}
+
+.farsi-digits {
+  font-family: 'Sahel VF', sans-serif;
+  font-feature-settings: "ss01" 1;  /* Enable Farsi digits */
+}
+```
+
+**Benefits:**
+- ✅ One file instead of many
+- ✅ Better browser caching
+- ✅ Smoother weight transitions
+- ✅ Smaller total download size
 
 ## 📋 Prerequisites
 
 To build the fonts from source, you'll need:
 
 - **FontForge**: Font editor and converter
-- **Python 3**: For build scripts
+- **Python 3**: For build scripts and font enhancement
 - **fontmake**: Python tool for building fonts
-- **woff2_compress**: Tool for creating WOFF2 files
+- **fonttools**: Python library for font manipulation
 
 ### Installing Dependencies
 
@@ -28,23 +106,21 @@ To build the fonts from source, you'll need:
 ```bash
 sudo apt-get update
 sudo apt-get install -y fontforge python3 python3-pip
-pip3 install fontmake defcon
-sudo apt-get install -y woff2
+pip3 install fontmake defcon fonttools brotli
 ```
 
 #### macOS
 
 ```bash
 brew install fontforge python3
-pip3 install fontmake defcon
-brew install woff2
+pip3 install fontmake defcon fonttools brotli
 ```
 
 #### Arch Linux
 
 ```bash
-sudo pacman -S fontforge python python-pip woff2
-pip install fontmake defcon
+sudo pacman -S fontforge python python-pip
+pip install fontmake defcon fonttools brotli
 ```
 
 ## 🔨 Building the Fonts
@@ -67,9 +143,28 @@ This will:
 6. Compress to WOFF2 format
 7. Clean up temporary files
 
-### Building Static Fonts
+### Enhancing the Variable Font
 
-The static font files (TTF, WOFF, WOFF2, EOT) for each weight are pre-built and available in the `dist/` directory. To rebuild them, you would need the fontbuilder tool (see original repository).
+To add Latin glyphs and OpenType features to the variable font:
+
+```bash
+# Ensure fonttools is installed
+pip3 install fonttools brotli
+
+# Run the enhancement script
+python3 scripts/enhance_variable_font.py
+```
+
+This will:
+1. Copy missing glyphs (Latin, Western digits) from static fonts
+2. Add `ss01` OpenType feature for Farsi digit switching
+3. Generate enhanced Sahel-VF.ttf and Sahel-VF.woff2
+
+### Building Static Fonts (Legacy)
+
+⚠️ **Deprecated:** The static font files are now superseded by the variable font.
+
+The static font files (TTF, WOFF, WOFF2, EOT) for each weight are pre-built and available in the `dist/` directory for backward compatibility. They are kept for legacy browser support only.
 
 ## 📁 Repository Structure
 
@@ -86,14 +181,21 @@ sahel-font/
 │   ├── fix-features-fea.py   # Feature file fixer
 │   ├── fontforge.pe          # FontForge script
 │   └── Sahel.designspace     # Designspace file
+├── scripts/         # Font enhancement tools
+│   └── enhance_variable_font.py  # Add Latin glyphs and features
+├── docs/            # Documentation
+│   └── missing-glyphs.md     # Glyph parity analysis
 ├── dist/            # Built font files
-│   ├── Sahel*.ttf
-│   ├── Sahel*.woff
-│   ├── Sahel*.woff2
-│   ├── Sahel*.eot
-│   ├── Sahel-VF.ttf          # Variable font
-│   ├── Sahel-VF.woff2        # Variable font (compressed)
-│   └── font-face.css         # CSS declarations
+│   ├── Sahel-VF.ttf          # ⭐ Enhanced variable font (recommended)
+│   ├── Sahel-VF.woff2        # ⭐ Compressed variable font (recommended)
+│   ├── sahel-vf-usage.css    # CSS usage examples
+│   ├── test-sahel-vf.html    # Interactive test page
+│   ├── Sahel*.ttf            # Legacy static fonts
+│   ├── Sahel*.woff           # Legacy static fonts
+│   ├── Sahel*.woff2          # Legacy static fonts
+│   ├── Farsi-Digits/         # ⚠️ Deprecated - use ss01 feature instead
+│   ├── Without-Latin/        # ⚠️ Deprecated - use variable font
+│   └── font-face.css         # Legacy CSS declarations
 ├── .github/         # GitHub Actions workflows
 │   └── workflows/
 │       ├── build.yml         # CI/CD build workflow
@@ -104,28 +206,51 @@ sahel-font/
 
 ## 🧪 Testing
 
-After building, you can test the fonts by:
+### Quick Test
 
-1. **Using the validation script**:
-   ```bash
-   python3 validate_fonts.py
-   ```
-   This will check all TTF files in the `dist/` directory for:
-   - File format validity
-   - Required tables presence
-   - Metadata completeness
-   - Reasonable file sizes
+Open the interactive test page in your browser:
+```bash
+# If you have Python installed
+cd dist
+python3 -m http.server 8000
+# Then open http://localhost:8000/test-sahel-vf.html
+```
 
-2. **Manual testing**:
-   - Install them on your system
-   - Open them in FontForge to inspect
-   - Use the web font-face declarations in a test HTML page
+### Validation
 
-3. **Using fonttools**:
-   ```bash
-   ttx -l dist/Sahel-VF.ttf  # List tables
-   ttx -t name dist/Sahel.ttf  # Extract name table
-   ```
+Test the variable font for quality and completeness:
+
+```bash
+# Validate font structure
+python3 validate_fonts.py
+
+# Check glyph count and features
+python3 -c "
+from fontTools.ttLib import TTFont
+font = TTFont('dist/Sahel-VF.ttf')
+print(f'Glyphs: {len(font.getGlyphOrder())}')
+print(f'Features: {[f.FeatureTag for f in font[\"GSUB\"].table.FeatureList.FeatureRecord]}')
+"
+```
+
+### Manual Testing
+
+1. **Browser testing**: Open `dist/test-sahel-vf.html` to see live examples
+2. **System installation**: Install `Sahel-VF.ttf` and test in applications
+3. **FontForge inspection**: Open the font in FontForge to examine glyphs
+4. **CSS testing**: Use examples from `dist/sahel-vf-usage.css`
+
+### Feature Testing
+
+Test the Farsi digit feature:
+```html
+<p style="font-family: 'Sahel VF'; font-feature-settings: 'ss01' 0;">
+  Western: 0123456789
+</p>
+<p style="font-family: 'Sahel VF'; font-feature-settings: 'ss01' 1;">
+  Farsi: 0123456789
+</p>
+```
 
 ## 🤝 Contributing
 
@@ -154,24 +279,29 @@ This repository includes GitHub Actions workflows for automated building and tes
 
 ## 🐛 Known Issues
 
-### Variable Font Issues
-- Mark placement distortion in some contexts
-- **Build process**: The source SFD files had glyph component compatibility issues that required automatic fixes during the build process. The build scripts now include:
-  - `fix-compatibility.py` - Decomposes problematic composite glyphs to ensure compatibility
-  - `clean-features.py` - Removes references to missing glyphs from feature files
+### Resolved Issues ✅
 
-### Build Notes
-The variable font can now be successfully built from source using the enhanced build scripts. The scripts automatically:
-1. Detect and fix component reference mismatches across masters
-2. Decompose incompatible composite glyphs
-3. Clean up feature file references to missing glyphs
+- ✅ **Latin character support**: Now included in variable font
+- ✅ **Western digit support**: Now included with OpenType switching
+- ✅ **Multiple font files needed**: Replaced by single variable font with features
+- ✅ **Farsi digits**: Switchable via CSS `font-feature-settings: "ss01" 1`
 
-## 📝 To-Do List
+### Current Limitations
 
-- [ ] Font testing page
-- [ ] Add Latin characters from an open-source variable font
-- [ ] Test font in all supported applications
+- Mark placement may have minor distortion in some rare contexts
+- Source SFD files still lack Latin glyphs (enhancement done at binary level)
+- Static font variants still present for backward compatibility (can be removed in future)
+
+## 📝 Roadmap
+
+- [x] Enhance variable font with Latin and Western digits
+- [x] Add OpenType `ss01` feature for Farsi digit switching
+- [x] Create comprehensive documentation and examples
+- [x] Generate interactive test page
+- [ ] Update source .sfd files to include all glyphs
+- [ ] Simplify build process to generate enhanced VF directly
 - [ ] Add additional variable font axes (e.g., width, slant)
+- [ ] Remove deprecated static font variants
 
 ## 📄 License
 
@@ -181,7 +311,8 @@ This project is licensed under the SIL Open Font License (OFL). See the [LICENSE
 
 - **Original Author**: Saber Rastikerdar ([@rastikerdar](https://github.com/rastikerdar))
 - **Contributors**: Amin Abedi ([@aminabedi68](https://github.com/aminabedi68))
-- **Tools**: Built with [FontForge](https://fontforge.github.io)
+- **Tools**: Built with [FontForge](https://fontforge.github.io) and [fontTools](https://github.com/fonttools/fonttools)
+- **Enhancement**: Variable font enhancement using fontTools
 
 ## 📚 Resources
 
@@ -189,3 +320,4 @@ This project is licensed under the SIL Open Font License (OFL). See the [LICENSE
 - [Font Preview](http://rastikerdar.github.io/sahel-font/)
 - [FontForge Documentation](https://fontforge.org/docs/)
 - [Variable Fonts Guide](https://web.dev/variable-fonts/)
+- [OpenType Feature Reference](https://docs.microsoft.com/en-us/typography/opentype/spec/featurelist)
