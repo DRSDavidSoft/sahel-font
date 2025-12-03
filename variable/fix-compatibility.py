@@ -38,7 +38,7 @@ def print_info(message):
     print(f"{Colors.BLUE}ℹ {message}{Colors.NC}")
 
 
-def fix_component_compatibility(fonts, glyph_name, component_index):
+def fix_component_compatibility(fonts, glyph_name):
     """Fix component compatibility by decomposing in all masters."""
     print_info(f"Fixing glyph '{glyph_name}' - decomposing ALL components")
     
@@ -148,7 +148,7 @@ def main():
     # Fix component issues
     print_info("Fixing component compatibility issues...")
     for glyph_name in issues:
-        fix_component_compatibility(fonts, glyph_name, 0)  # component_index not used anymore
+        fix_component_compatibility(fonts, glyph_name)
     print()
     
     # Fix anchor issues

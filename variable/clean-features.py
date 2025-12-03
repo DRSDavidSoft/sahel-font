@@ -3,34 +3,45 @@
 Remove references to missing glyphs from features file.
 """
 
-import sys
 import re
 from defcon import Font
 
 
 def clean_features(ufo_path):
     """Remove glyph references that don't exist in the font."""
-    font = Font(ufo_path)
+    try:
+        font = Font(ufo_path)
+    except Exception as e:
+        print(f"✗ Error loading UFO {ufo_path}: {e}")
+        return False
+    
     available_glyphs = set(font.keys())
     
     features_path = f"{ufo_path}/features.fea"
     
-    with open(features_path, 'r', encoding='utf-8') as f:
-        content = f.read()
+    try:
+        with open(features_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except FileNotFoundError:
+        print(f"✗ Features file not found: {features_path}")
+        return False
+    except Exception as e:
+        print(f"✗ Error reading features file {features_path}: {e}")
+        return False
     
-    # Find all glyph references (uni#### pattern)
-    glyph_pattern = r'\buni[0-9A-Fa-f]{4}\b'
+    # Find all glyph references (uni#### pattern with optional suffixes like .compact)
+    glyph_pattern = r'\buni[0-9A-Fa-f]{4,6}(?:\.[a-zA-Z0-9_]+)?\b'
     referenced_glyphs = set(re.findall(glyph_pattern, content))
     
     missing_glyphs = referenced_glyphs - available_glyphs
     
     if not missing_glyphs:
         print(f"✓ No missing glyphs in {ufo_path}")
-        return
+        return True
     
     print(f"⚠ Found {len(missing_glyphs)} missing glyphs in {ufo_path}")
     
-    # Remove lines containing missing glyphs
+    # Remove lines containing missing glyphs (using word boundaries)
     lines = content.split('\n')
     cleaned_lines = []
     removed_count = 0
@@ -38,7 +49,8 @@ def clean_features(ufo_path):
     for line in lines:
         has_missing = False
         for missing_glyph in missing_glyphs:
-            if missing_glyph in line:
+            # Use word boundary regex to avoid partial matches
+            if re.search(rf'\b{re.escape(missing_glyph)}\b', line):
                 has_missing = True
                 break
         
@@ -48,13 +60,22 @@ def clean_features(ufo_path):
             cleaned_lines.append(line)
     
     # Write back
-    with open(features_path, 'w', encoding='utf-8') as f:
-        f.write('\n'.join(cleaned_lines))
+    try:
+        with open(features_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(cleaned_lines))
+    except Exception as e:
+        print(f"✗ Error writing features file {features_path}: {e}")
+        return False
     
     print(f"✓ Removed {removed_count} lines with missing glyph references from {ufo_path}")
+    return True
 
 
 if __name__ == "__main__":
-    clean_features("Sahel.ufo")
-    clean_features("Sahel-Bold.ufo")
-    clean_features("Sahel-Black.ufo")
+    success = True
+    success &= clean_features("Sahel.ufo")
+    success &= clean_features("Sahel-Bold.ufo")
+    success &= clean_features("Sahel-Black.ufo")
+    
+    if not success:
+        exit(1)
