@@ -36,7 +36,7 @@ def print_info(message):
 
 
 def fix_line(line):
-    """
+    r"""
     Fix a single line of feature code.
     
     The function processes positioning rules in the format:

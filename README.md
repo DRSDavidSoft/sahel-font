@@ -28,7 +28,7 @@ To build the fonts from source, you'll need:
 ```bash
 sudo apt-get update
 sudo apt-get install -y fontforge python3 python3-pip
-pip3 install fontmake
+pip3 install fontmake defcon
 sudo apt-get install -y woff2
 ```
 
@@ -36,7 +36,7 @@ sudo apt-get install -y woff2
 
 ```bash
 brew install fontforge python3
-pip3 install fontmake
+pip3 install fontmake defcon
 brew install woff2
 ```
 
@@ -44,7 +44,7 @@ brew install woff2
 
 ```bash
 sudo pacman -S fontforge python python-pip woff2
-pip install fontmake
+pip install fontmake defcon
 ```
 
 ## 🔨 Building the Fonts
@@ -61,9 +61,11 @@ cd variable
 This will:
 1. Convert SFD source files to UFO format
 2. Fix feature definitions
-3. Generate variable TTF font
-4. Compress to WOFF2 format
-5. Clean up temporary files
+3. Fix glyph compatibility issues for variable fonts
+4. Clean up references to missing glyphs
+5. Generate variable TTF font
+6. Compress to WOFF2 format
+7. Clean up temporary files
 
 ### Building Static Fonts
 
@@ -154,12 +156,15 @@ This repository includes GitHub Actions workflows for automated building and tes
 
 ### Variable Font Issues
 - Mark placement distortion in some contexts
-- **Build compatibility issues**: The source SFD files have glyph component compatibility issues that prevent building the variable font from source. The pre-built variable fonts in the `dist/` directory are functional and were built from an earlier compatible version of the source files.
+- **Build process**: The source SFD files had glyph component compatibility issues that required automatic fixes during the build process. The build scripts now include:
+  - `fix-compatibility.py` - Decomposes problematic composite glyphs to ensure compatibility
+  - `clean-features.py` - Removes references to missing glyphs from feature files
 
-### Workaround
-Use the pre-built variable font files in the `dist/` directory:
-- `dist/Sahel-VF.ttf` - Variable font (TTF format)
-- `dist/Sahel-VF.woff2` - Variable font (WOFF2 format)
+### Build Notes
+The variable font can now be successfully built from source using the enhanced build scripts. The scripts automatically:
+1. Detect and fix component reference mismatches across masters
+2. Decompose incompatible composite glyphs
+3. Clean up feature file references to missing glyphs
 
 ## 📝 To-Do List
 

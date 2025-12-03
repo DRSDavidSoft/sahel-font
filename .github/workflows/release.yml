@@ -36,7 +36,7 @@ jobs:
         
         echo "::group::🐍 Installing Python dependencies"
         pip install --upgrade pip
-        pip install fontmake fonttools brotli zopfli
+        pip install fontmake fonttools brotli zopfli defcon
         echo "::endgroup::"
         
     - name: 🏗️ Build variable font

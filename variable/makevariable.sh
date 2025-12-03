@@ -84,6 +84,18 @@ python3 fix-features-fea.py "Sahel-Black.ufo/features.fea" "Sahel-Black.ufo/feat
 print_success "Feature files fixed"
 echo ""
 
+# Fix glyph compatibility issues
+print_step "🔧 Fixing glyph compatibility..."
+python3 fix-compatibility.py
+print_success "Compatibility fixes applied"
+echo ""
+
+# Clean up references to missing glyphs
+print_step "🧹 Cleaning up features..."
+python3 clean-features.py
+print_success "Features cleaned"
+echo ""
+
 # Build variable font
 print_step "🏗️  Building variable font..."
 BUILD_OUTPUT=$(mktemp)
