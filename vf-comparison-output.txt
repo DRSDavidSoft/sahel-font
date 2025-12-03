@@ -1,0 +1,77 @@
+
+[0;35m======================================================================[0m
+[0;35m  🔤 Sahel Font: VF vs Static Comparison[0m
+[0;35m======================================================================[0m
+
+[0;32m✓ Found variable font: Sahel-VF.ttf[0m
+[0;32m✓ Found static font: Sahel-Light.ttf[0m
+[0;32m✓ Found static font: Sahel.ttf[0m
+[0;32m✓ Found static font: Sahel-SemiBold.ttf[0m
+[0;32m✓ Found static font: Sahel-Bold.ttf[0m
+[0;32m✓ Found static font: Sahel-Black.ttf[0m
+
+[0;36m▶ Variable Font Analysis[0m
+[0;34mℹ Number of glyphs: 329[0m
+[0;34mℹ Number of mapped characters: 288[0m
+[0;34mℹ Is variable: True[0m
+[0;34mℹ Number of tables: 18[0m
+
+[0;36m▶ Static Fonts Analysis[0m
+[0;34mℹ Light: 552 glyphs, 545 mapped characters[0m
+[0;34mℹ Regular: 552 glyphs, 545 mapped characters[0m
+[0;34mℹ SemiBold: 552 glyphs, 545 mapped characters[0m
+[0;34mℹ Bold: 552 glyphs, 545 mapped characters[0m
+[0;34mℹ Black: 552 glyphs, 545 mapped characters[0m
+
+[0;36m▶ Glyph Coverage Comparison[0m
+[0;34mℹ Total unique glyphs across all static fonts: 552[0m
+[0;34mℹ Variable font glyphs: 329[0m
+[0;32m✓ Common glyphs: 329 (100.0% of VF)[0m
+[0;32m✓ No glyphs exclusive to VF[0m
+[1;33m⚠ Glyphs only in static fonts: 223[0m
+  First 20: H, K, M, X, afii00208, braceright, bullet, five, logicalnot, lozenge, o, ordmasculine, q, quoteleft, two, uni2007, uniFB01, uniFB7B.ref1, uniFB93.ref1, yen
+
+[0;36m▶ Character Coverage Comparison[0m
+[0;34mℹ Total unique characters across all static fonts: 545[0m
+[0;34mℹ Variable font characters: 288[0m
+[0;32m✓ Common characters: 288 (100.0% of VF)[0m
+[0;32m✓ No characters exclusive to VF[0m
+[1;33m⚠ Characters only in static fonts: 257[0m
+
+[0;36m▶ Per-Weight Comparison[0m
+[0;34mℹ Light: 100.0% coverage of VF glyphs[0m
+  Extra in Light: 223 glyphs
+[0;34mℹ Regular: 100.0% coverage of VF glyphs[0m
+  Extra in Regular: 223 glyphs
+[0;34mℹ SemiBold: 100.0% coverage of VF glyphs[0m
+  Extra in SemiBold: 223 glyphs
+[0;34mℹ Bold: 100.0% coverage of VF glyphs[0m
+  Extra in Bold: 223 glyphs
+[0;34mℹ Black: 100.0% coverage of VF glyphs[0m
+  Extra in Black: 223 glyphs
+
+[0;35m======================================================================[0m
+[0;35m  📊 Summary[0m
+[0;35m======================================================================[0m
+
+
+[0;36mVariable Font (VF):[0m
+  • Glyphs: 329
+  • Characters: 288
+  • Tables: 18
+
+[0;36mStatic Fonts (Combined):[0m
+  • Unique glyphs: 552
+  • Unique characters: 545
+  • Number of weights: 5
+
+[0;36mCoverage:[0m
+  • Common glyphs: 329 (100.0% of VF)
+  • VF-only glyphs: 0
+  • Static-only glyphs: 223
+  • Common characters: 288 (100.0% of VF)
+  • VF-only characters: 0
+  • Static-only characters: 257
+
+[1;33m⚠ VF and static fonts have different glyph coverage.[0m
+
