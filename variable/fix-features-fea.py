@@ -54,7 +54,7 @@ def fix_line(line):
     trimmed_line = line.strip()
     
     # Only process positioning rules
-    if not trimmed_line.startswith(r"pos \uni"):
+    if not trimmed_line.startswith("pos uni"):
         return line
 
     # Remove empty positioning rules
